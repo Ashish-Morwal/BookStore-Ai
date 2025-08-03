@@ -44,12 +44,15 @@ mongoose
   .then(() => console.log("✅ MongoDB Connected Successfully!"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-// Vercel doesn't need `app.listen`, so we export the app
-module.exports = app;
+// // Vercel doesn't need `app.listen`, so we export the app
+// module.exports = app;
 
-// If running locally, start the server
-if (process.env.NODE_ENV !== "production") {
-  app.listen(port, () => {
-    console.log(`🚀 Server running on http://localhost:${port}`);
-  });
-}
+// // If running locally, start the server
+// if (process.env.NODE_ENV !== "production") {
+//   app.listen(port, () => {
+//     console.log(`🚀 Server running on http://localhost:${port}`);
+//   });
+// }
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
