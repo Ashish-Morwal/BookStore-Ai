@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://book-store-app-frontend-eta.vercel.app",
+      "https://bookstore-ai-frontend.onrender.com",
     ],
     credentials: true,
   })
