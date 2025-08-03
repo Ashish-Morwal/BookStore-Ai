@@ -8,7 +8,7 @@ export default function Chatbot() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // ✅ Send message to backend
+  // Send message to backend
   const sendMessage = async () => {
     if (!input.trim()) return;
 
@@ -39,7 +39,7 @@ export default function Chatbot() {
 
   return (
     <div className="fixed bottom-5 right-5 z-50">
-      {/* ✅ Chat Window (Dropdown) */}
+      {/* Chat Window (Dropdown) */}
       {open && (
         <div className="w-96 h-[450px] bg-white shadow-2xl rounded-2xl p-4 border border-gray-300 flex flex-col mb-3 transform transition-all duration-300 ease-in-out">
           {/* Header */}
@@ -68,7 +68,7 @@ export default function Chatbot() {
               >
                 {msg.sender === "bot" ? (
                   <>
-                    {/* ✅ Render Markdown for Bot Messages */}
+                    {/* Render Markdown for Bot Messages */}
                     <ReactMarkdown>{msg.text}</ReactMarkdown>
                   </>
                 ) : (
@@ -104,7 +104,7 @@ export default function Chatbot() {
         </div>
       )}
 
-      {/* ✅ Floating Button to Toggle Chat */}
+      {/* Floating Button to Toggle Chat */}
       <button
         onClick={() => setOpen(!open)}
         className="w-14 h-14 rounded-full bg-blue-600 text-white shadow-xl flex items-center justify-center hover:bg-blue-700 transition-all"
