@@ -8,7 +8,6 @@ const postABook = async (req, res) => {
       .status(200)
       .send({ message: "Book posted successfully", book: newBook });
   } catch (error) {
-    console.error("Error creating book", error);
     res.status(500).send({ message: "Failed to create book" });
   }
 };
@@ -38,7 +37,7 @@ const getAllBooks = async (req, res) => {
     const endTime = Date.now();
     const queryTime = endTime - startTime;
 
-    console.log(`📊 getAllBooks query executed in ${queryTime}ms`);
+    // console.log(`📊 getAllBooks query executed in ${queryTime}ms`);
 
     res.status(200).send({
       books,
@@ -48,7 +47,6 @@ const getAllBooks = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching books", error);
     res.status(500).send({ message: "Failed to fetch books" });
   }
 };
@@ -78,7 +76,7 @@ const getSingleBook = async (req, res) => {
     const endTime = Date.now();
     const queryTime = endTime - startTime;
 
-    console.log(`📊 getSingleBook query executed in ${queryTime}ms`);
+    // console.log(`📊 getSingleBook query executed in ${queryTime}ms`);
 
     res.status(200).send({
       book,
@@ -87,7 +85,7 @@ const getSingleBook = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching book", error);
+    // console.error("Error fetching book", error);
     res.status(500).send({ message: "Failed to fetch book" });
   }
 };
@@ -118,7 +116,7 @@ const getBooksByCategory = async (req, res) => {
     const endTime = Date.now();
     const queryTime = endTime - startTime;
 
-    console.log(`📊 getBooksByCategory query executed in ${queryTime}ms`);
+    // console.log(`📊 getBooksByCategory query executed in ${queryTime}ms`);
 
     res.status(200).send({
       books,
@@ -129,7 +127,7 @@ const getBooksByCategory = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching books by category", error);
+    // console.error("Error fetching books by category", error);
     res.status(500).send({ message: "Failed to fetch books by category" });
   }
 };
@@ -158,7 +156,7 @@ const getTrendingBooks = async (req, res) => {
     const endTime = Date.now();
     const queryTime = endTime - startTime;
 
-    console.log(`📊 getTrendingBooks query executed in ${queryTime}ms`);
+    // console.log(`📊 getTrendingBooks query executed in ${queryTime}ms`);
 
     res.status(200).send({
       books,
@@ -168,7 +166,7 @@ const getTrendingBooks = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching trending books", error);
+    // console.error("Error fetching trending books", error);
     res.status(500).send({ message: "Failed to fetch trending books" });
   }
 };
@@ -205,7 +203,7 @@ const searchBooks = async (req, res) => {
     const endTime = Date.now();
     const queryTime = endTime - startTime;
 
-    console.log(`📊 searchBooks query executed in ${queryTime}ms`);
+    // console.log(`📊 searchBooks query executed in ${queryTime}ms`);
 
     res.status(200).send({
       books,
@@ -216,7 +214,7 @@ const searchBooks = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error searching books", error);
+    // console.error("Error searching books", error);
     res.status(500).send({ message: "Failed to search books" });
   }
 };
@@ -236,7 +234,7 @@ const UpdateBook = async (req, res) => {
       book: updatedBook,
     });
   } catch (error) {
-    console.error("Error updating a book", error);
+    // console.error("Error updating a book", error);
     res.status(500).send({ message: "Failed to update a book" });
   }
 };
@@ -253,7 +251,7 @@ const deleteABook = async (req, res) => {
       book: deletedBook,
     });
   } catch (error) {
-    console.error("Error deleting a book", error);
+    // console.error("Error deleting a book", error);
     res.status(500).send({ message: "Failed to delete a book" });
   }
 };

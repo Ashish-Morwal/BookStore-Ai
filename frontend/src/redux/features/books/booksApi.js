@@ -20,11 +20,13 @@ const booksApi = createApi({
   endpoints: (builder) => ({
     fetchAllBooks: builder.query({
       query: () => "/",
+      transformResponse: (response) => response.books, // ✅ FIX
       providesTags: ["Books"],
     }),
 
     fetchBookById: builder.query({
       query: (id) => `/${id}`,
+      transformResponse: (response) => response.book,
       providesTags: (result, error, id) => [{ type: "Books", id }],
     }),
 
