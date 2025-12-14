@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import baseURL from "../utils/baseURL";
@@ -9,12 +9,11 @@ export default function Chatbot() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // ✅ Send message to backend
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const newMsg = { sender: "user", text: input };
-    setMessages((prev) => [...prev, newMsg]);
+    const userMsg = { sender: "user", text: input };
+    setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setLoading(true);
 
@@ -29,44 +28,30 @@ export default function Chatbot() {
       console.error("Chatbot error:", err);
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", text: "⚠️ AI service is currently unavailable." },
+        { sender: "bot", text: "⚠️ AI service is unavailable." },
       ]);
     }
 
     setLoading(false);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") sendMessage();
-  };
-
   return (
     <div className="fixed bottom-5 right-5 z-50">
-      {/* Chat Window */}
       {open && (
-        <div className="w-96 h-[450px] bg-white shadow-2xl rounded-2xl p-4 border border-gray-300 flex flex-col mb-3 transition-all">
-          {/* Header */}
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-lg font-bold text-gray-800">
-              🤖 AI Bookstore Assistant
-            </h2>
-            <button
-              onClick={() => setOpen(false)}
-              className="text-gray-500 hover:text-red-500 text-xl font-bold"
-            >
-              ✖
-            </button>
+        <div className="w-96 h-[450px] bg-white shadow-2xl rounded-2xl p-4 border flex flex-col mb-3">
+          <div className="flex justify-between mb-2">
+            <h2 className="font-bold">🤖 AI Bookstore Assistant</h2>
+            <button onClick={() => setOpen(false)}>✖</button>
           </div>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto mb-3 p-3 bg-gray-50 rounded-lg space-y-2">
+          <div className="flex-1 overflow-y-auto space-y-2 bg-gray-50 p-3 rounded">
             {messages.map((msg, i) => (
               <div
                 key={i}
-                className={`max-w-[80%] px-3 py-2 rounded-lg text-sm shadow whitespace-pre-wrap ${
+                className={`px-3 py-2 rounded max-w-[80%] ${
                   msg.sender === "user"
                     ? "bg-green-100 ml-auto text-right"
-                    : "bg-gray-200 text-left"
+                    : "bg-gray-200"
                 }`}
               >
                 {msg.sender === "bot" ? (
@@ -76,27 +61,20 @@ export default function Chatbot() {
                 )}
               </div>
             ))}
-
-            {loading && (
-              <div className="bg-gray-200 px-3 py-2 rounded-lg text-sm italic text-gray-600 w-fit">
-                AI is typing...
-              </div>
-            )}
+            {loading && <div className="italic text-sm">AI is typing…</div>}
           </div>
 
-          {/* Input */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-2">
             <input
-              type="text"
-              className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Ask me about books..."
+              className="flex-1 border p-2 rounded"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              placeholder="Ask about books..."
             />
             <button
               onClick={sendMessage}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition"
+              className="bg-blue-500 text-white px-4 rounded"
             >
               Send
             </button>
@@ -104,10 +82,9 @@ export default function Chatbot() {
         </div>
       )}
 
-      {/* Toggle Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="w-14 h-14 rounded-full bg-blue-600 text-white shadow-xl flex items-center justify-center hover:bg-blue-700 transition"
+        className="w-14 h-14 bg-blue-600 text-white rounded-full shadow"
       >
         {open ? "−" : "💬"}
       </button>
