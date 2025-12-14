@@ -1,5 +1,6 @@
-const getBaseUrl = () => {
-  return "https://bookstore-ai-backend-am25.onrender.com";
-};
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : "https://bookstore-ai-backend-am25.onrender.com";
 
-export default getBaseUrl;
+export default baseURL;

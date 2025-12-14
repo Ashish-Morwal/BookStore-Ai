@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Chatbot from "./components/Chatbot"; // ✅ Import your Chatbot
+import Chatbot from "./components/Chatbot";
 import { AuthProvide } from "./context/AuthContext";
 import { useEffect, useState } from "react";
 import Loading from "./components/Loading";

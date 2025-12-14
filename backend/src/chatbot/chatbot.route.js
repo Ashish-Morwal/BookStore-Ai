@@ -1,35 +1,36 @@
-// src/chatbot/chatbot.route.js
 const express = require("express");
-require("dotenv").config();
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const Groq = require("groq-sdk");
 
 const router = express.Router();
 
-// ✅ Initialize Gemini
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // you can use gemini-1.5-pro as well
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
+});
 
-/**
- * Chatbot Endpoint
- */
 router.post("/ask", async (req, res) => {
   const { question } = req.body;
 
   if (!question) {
-    return res.status(400).json({ error: "❌ Question is required" });
+    return res.status(400).json({ error: "Question is required" });
   }
 
   try {
-    // ✅ Generate response from Gemini
-    const result = await model.generateContent(question);
-    const answer = result.response.text();
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        { role: "system", content: "You are a helpful AI assistant." },
+        { role: "user", content: question },
+      ],
+      temperature: 0.4,
+      max_tokens: 512,
+    });
 
+    const answer = completion.choices[0].message.content;
     res.json({ answer });
   } catch (error) {
-    console.error("Gemini API Error:", error.message);
-    res
-      .status(500)
-      .json({ answer: "⚠️ Error: Gemini AI service is unavailable." });
+    res.status(500).json({
+      answer: "⚠️ Error: Groq AI service is unavailable.",
+    });
   }
 });
 
