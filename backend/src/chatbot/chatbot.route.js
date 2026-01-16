@@ -3,9 +3,11 @@ const axios = require("axios");
 
 const router = express.Router();
 
-// URL of the Python AI Service
-const AI_SERVICE_URL = "http://localhost:8000/chat";
-const AI_SERVICE_STREAM_URL = "http://localhost:8000/chat-stream";
+// URL of the Python AI Service (Dynamic from Environment Variable)
+const BASE_URL = (process.env.AI_SERVICE_URL || "http://localhost:8000").replace(/\/$/, "");
+const AI_SERVICE_URL = `${BASE_URL}/chat`;
+const AI_SERVICE_STREAM_URL = `${BASE_URL}/chat-stream`;
+
 
 router.post("/ask", async (req, res) => {
   const { question, session_id } = req.body;
@@ -24,7 +26,12 @@ router.post("/ask", async (req, res) => {
     // Python service returns { answer, session_id }
     res.json(response.data);
   } catch (error) {
-    console.error("AI Service Error:", error.message);
+    console.error("AI Service Error:", {
+      message: error.message,
+      url: AI_SERVICE_URL,
+      status: error.response?.status,
+      data: error.response?.data,
+    });
     res.status(500).json({
       answer: "⚠️ AI service is currently unavailable. Please try again later.",
       error: error.message,
@@ -71,7 +78,12 @@ router.post("/ask-stream", async (req, res) => {
       response.data.destroy();
     });
   } catch (error) {
-    console.error("AI Service Streaming Error:", error.message);
+    console.error("AI Service Streaming Error:", {
+      message: error.message,
+      url: AI_SERVICE_STREAM_URL,
+      status: error.response?.status,
+      data: error.response?.data,
+    });
     res.write(
       `data: ${JSON.stringify({
         chunk: "⚠️ AI service is currently unavailable. Please try again later.",
